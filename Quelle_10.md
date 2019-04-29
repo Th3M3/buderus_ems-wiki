@@ -26,8 +26,8 @@
 
   |Sender (hex)|Ziel (hex)|Typ (hex)|Offset (hex)|Byte (dez)| Bit |Divisor (dez)|  Einheit  |Bemerkung
   |:----------:|:--------:|:-------:|:----------:|:--------:|:---:|:-----------:|:---------:|:--------
-  |   **10**   |  **88**  |  **14** |   **00**   |          |     |             |           |Ziel 08 mit gesetzem höchsten Bits bedeutet 'Polling'
-  |            |          |         |            | **5**    |     |             |           |0x03 = die gewünsche Datenlänge
+  |   **10**   |  **88**  |  **14** |   **00**   |          |     |             |           |Ziel 08 mit gesetzem hÃ¶chsten Bits bedeutet 'Polling'
+  |            |          |         |            | **5**    |     |             |           |0x03 = die gewÃ¼nsche DatenlÃ¤nge
   |            |          |         |            | **6**    |     |             |           |CRC
   |            |          |         |            | **7**    |     |             |           |BREAK (0x00)
 
@@ -77,7 +77,7 @@
   |:----------:|:--------:|:-------:|:----------:|:------------------:|:--------:|:---:|:-----------:|:---------:|:--------
   |   **10**   |  **00**  |  **ff** |   **00**   | **01 a5<br>01 a6** |          |     |             |           |**Heizkreis 1<br>Heizkreis 2**
   |            |          |         |         00 |                    | **7**    |     |             |           |bisher immer 0x80
-  |            |          |         |         02 |                    | **9**    |     |             |           |wechselt zw. 0x00, 0x01, 0x03 (0x11 wenn Sommer/Winter-Umschaltung auf ständig Sommer gestellt wird)
+  |            |          |         |         02 |                    | **9**    |     |             |           |wechselt zw. 0x00, 0x01, 0x03 (0x11 wenn Sommer/Winter-Umschaltung auf stÃ¤ndig Sommer gestellt wird)
   |            |          |         |         03 |                    | **10**   |     | 2           |           |Raum-Solltemperatur
   |            |          |         |         04 |                    | **11**   |     |             |           |Vorlauftemp. Sollwert
   |            |          |         |         06 |                    | **13**   |     | 2           |           |aktuelle Raumtemp. lt. Programm (gleicher Wert wie in Byte 10)
@@ -97,7 +97,7 @@
   |            |          |         |            |                    | **33**   |     |             |           |BREAK (0x00)
 
   **Erweiterung mit Offset 0x19**, direkt im Anschluss:<br>
-  zwischendurch sporadisch noch mit 9 Bytes Länge
+  zwischendurch sporadisch noch mit 9 Bytes LÃ¤nge
 
   |Sender (hex)|Ziel (hex)|Typ (hex)|Offset (hex)|EMS+ Typ (2byte hex)|Byte (dez)| Bit |Divisor (dez)|  Einheit  |Bemerkung
   |:----------:|:--------:|:-------:|:----------:|:------------------:|:--------:|:---:|:-----------:|:---------:|:--------
@@ -116,20 +116,20 @@
   |            |          |         |            |                    | **22**   |     |             |           |CRC
   |            |          |         |            |                    | **23**   |     |             |           |BREAK (0x00)
 
-  **weitere Telegramme (variabler Längen) mit gleichem Header, aber mit Offset > 00**:
+  **weitere Telegramme (variabler LÃ¤ngen) mit gleichem Header, aber mit Offset > 00**:
 
   |Sender (hex)|Ziel (hex)|Typ (hex)|Offset (hex)|EMS+ Typ (2byte hex)|Bytes (dez) inkl. CRC & Break| Offset/s aus Datensatz                |Bemerkung
   |:----------:|:--------:|:-------:|:----------:|:------------------:|:---------------------------:|:-------------------------------------:|:--------
-  |   **10**   |  **00**  |  **ff** |   **02**   | **01 a5<br>01 a6** | 9                           | 02                                    |Telegramm bei Änderung
+  |   **10**   |  **00**  |  **ff** |   **02**   | **01 a5<br>01 a6** | 9                           | 02                                    |Telegramm bei Ã„nderung
   |   **10**   |  **00**  |  **ff** |   **03**   | **01 a5<br>01 a6** | 9<br>12<br>13<br>22<br>27   | 03<br>03-06<br>03-07<br>03-10<br>03-15|Telegramm bei BA-Wechsel (durch Zeitprogramm)
-  |   **10**   |  **00**  |  **ff** |   **04**   | **01 a5<br>01 a6** | 9                           | 04                                    |Telegramm bei Änderung
-  |   **10**   |  **00**  |  **ff** |   **06**   | **01 a5<br>01 a6** | 10                          | 06-07                                 |Telegramm um 23°° (Zeitprogramm)
-  |   **10**   |  **00**  |  **ff** |   **07**   | **01 a5<br>01 a6** | 9                           | 07                                    |Telegramm um 23°° (Zeitprogramm), bisher aber nur einmal in 3Tagen aufgezeichnet
+  |   **10**   |  **00**  |  **ff** |   **04**   | **01 a5<br>01 a6** | 9                           | 04                                    |Telegramm bei Ã„nderung
+  |   **10**   |  **00**  |  **ff** |   **06**   | **01 a5<br>01 a6** | 10                          | 06-07                                 |Telegramm um 23Â°Â° (Zeitprogramm)
+  |   **10**   |  **00**  |  **ff** |   **07**   | **01 a5<br>01 a6** | 9                           | 07                                    |Telegramm um 23Â°Â° (Zeitprogramm), bisher aber nur einmal in 3Tagen aufgezeichnet
   |   **10**   |  **00**  |  **ff** |   **08**   | **01 a5<br>01 a6** | 10<br>15<br>17              | 08-09<br>08-0e<br>08-10               |Telegramm alle 5 Min.
-  |   **10**   |  **00**  |  **ff** |   **0a**   | **01 a5<br>01 a6** | 9                           | 0a                                    |Telegramm um 23°° (Zeitprogramm)
+  |   **10**   |  **00**  |  **ff** |   **0a**   | **01 a5<br>01 a6** | 9                           | 0a                                    |Telegramm um 23Â°Â° (Zeitprogramm)
   |   **10**   |  **00**  |  **ff** |   **0b**   | **01 a5<br>01 a6** | 10<br>14                    | 0b-0c<br>0b-16                        |bei BA-Wechsel (Zeitprogramm)
   |   **10**   |  **00**  |  **ff** |   **0d**   | **01 a5<br>01 a6** | 10<br>12                    | 0d-0e<br>0d-10                        |alle 60sec.
-  |   **10**   |  **00**  |  **ff** |   **0f**   | **01 a5<br>01 a6** | 10                          | 0f-10                                 |unregelmäßig, alle 1-12min
+  |   **10**   |  **00**  |  **ff** |   **0f**   | **01 a5<br>01 a6** | 10                          | 0f-10                                 |unregelmÃ¤ÃŸig, alle 1-12min
   |   **10**   |  **00**  |  **ff** |   **15**   | **01 a5<br>01 a6** | 9<br>13<br>27               | 15<br>15-19<br>15-27                  |bei BA-Wechsel (durch Zeitprogramm)
   |   **10**   |  **00**  |  **ff** |   **1a**   | **01 a5<br>01 a6** | 9                           | 1a                                    |bei BA-Wechsel d. Zeitprogramm
   |   **10**   |  **00**  |  **ff** |   **20**   | **01 a5<br>01 a6** | 9                           | 20                                    |bei BA-Wechsel d. Zeitprogramm
@@ -172,7 +172,7 @@
 <br>
 
 - #### Typ 0x01e2: RC310 -> Mischer: ?_
-  Telegramwiederholung **alle 60sec. oder bei Änderung**
+  Telegramwiederholung **alle 60sec. oder bei Ã„nderung**
 
   |Sender (hex)|Ziel (hex)|Typ (hex)|Offset (hex)|EMS+ Typ (2byte hex)|Byte (dez)| Bit |Divisor (dez)|  Einheit  |Bemerkung
   |:----------:|:--------:|:-------:|:----------:|:------------------:|:--------:|:---:|:-----------:|:---------:|:--------
@@ -225,7 +225,7 @@
 
   |Sender (hex)|Ziel (hex)|Typ (hex)|Offset (hex)|EMS+ Typ (2byte hex)|Bytes (dez) inkl. CRC & Break| Offset/s aus Datensatz |Bemerkung
   |:----------:|:--------:|:-------:|:----------:|:------------------:|:---------------------------:|:----------------------:|:--------
-  |   **10**   |  **00**  |  **ff** |   **02**   |      **02 1d**     | 9                           | 02                     |bei Änderung (durch Zeitschaltuhr)
+  |   **10**   |  **00**  |  **ff** |   **02**   |      **02 1d**     | 9                           | 02                     |bei Ã„nderung (durch Zeitschaltuhr)
 
 
 
