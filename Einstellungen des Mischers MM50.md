@@ -42,19 +42,21 @@
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
-  |**`21`**|**`00`**|**`ff`**|**`00`**|**`01 cc`**|          |     |                |
+  |**`21`**|**`00`**|**`ff`**|**`00`**|**`01 ce`**|          |     |                |
   |        |        |        |     03 |           | **10**   |     |                |WW-Vorrang Heizkreis 2<br>ff= Ja<br>00= Nein
   |        |        |        |        |           | **??**   |     |                |CRC
   |        |        |        |        |           | **??**   |     |                |BREAK (0x00)
 
-  <br>
+<br>
 
-  #### RC310 -> MM50: Ändern einer Einstellung: WW-Vorrang HK2
+- #### RC310 -> MM50: Ändern einer Einstellung (EMS+)
   bei Bestätigen/Speichern einer Einstellung an RC
    
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
-  |**`10`**|**`21`**|**`ff`**| **??** |**`01 cc`**|          |     |                |Offset gibt die Einstellung an, die geändert werden soll
+  |**`10`**|**`21`**|**`ff`**|**`??`**|**`?? ??`**|          |     |                |EMS+ Typ & Offset = Einstellung, z.B.<br>Typ `01 ce`: [WW-Vorrang HK2][01ce]
   |        |        |        |        |           |  **7**   |     |                |neuer Wert
   |        |        |        |        |           |  **8**   |     |                |CRC
   |        |        |        |        |           |  **9**   |     |                |BREAK (0x00)
+
+<br>
