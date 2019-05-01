@@ -1,6 +1,6 @@
 ## zyklische Telegramme von RC310 (Adresse `10`)
 
-- #### Typ 0xe6: RCTimeMessage
+- #### Typ 0x06: RCTimeMessage
   Telegramwiederholung **alle 60sec.**
 
   | Sender |  Ziel  |  Typ   | Offset | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
