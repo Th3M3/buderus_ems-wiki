@@ -1,7 +1,7 @@
 ## Einstellungen des Mischers MM50
 
-> Wie beim MC110 werden beim Aufrufen einer Einstellung die Einstellungsparameter vom Mischer abgefragt.
-> Wie beim RC310 sender der Mischer lediglich die geänderte Einstellung als Broadcast (und nicht den kompletten Einstellungsdatensatz).
+> Wie beim MC110 werden beim Aufrufen einer Einstellung die Einstellungsparameter vom Mischer abgefragt.<br>
+> Wie beim RC310 sendet der Mischer lediglich die geänderte Einstellung als Broadcast (und nicht den kompletten Einstellungsdatensatz).
 
 <br>
 
