@@ -78,6 +78,7 @@ Meine Erkenntnisse aus den Telegrammen habe ich nach Absender und Typ, bzw. nach
 - [zyklische Telegramme von Sender 0x21](Quelle_21.md)
 - [Einstellungen der Bedieneinheit RC310](Einstellungen%20der%20Bedieneinheit%20RC310.md)
 - [Einstellungen des Regelgeräts MC110](Einstellungen%20des%20Regelgeräts%20MC110.md)
+- [Einstellungen des Mischers MM50](Einstellungen%20des%20Mischers%20MM50.md)
 
 ---
 ### Weiterführende Links und Quellen:
