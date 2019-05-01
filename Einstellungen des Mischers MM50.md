@@ -37,7 +37,7 @@
 <br>
 
 - #### Typ 0x01ce: Einstellungen WW-Vorrang HK2
-  [01ce]:#typ-0x01ce-einstellungen-ww-vorrang
+  [01ce]:#typ-0x01ce-einstellungen-ww-vorrang-hk2
   Gesammelter Datensatz aus den einzelnen Offsets. So als Telegramm noch nicht gesehen!
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
