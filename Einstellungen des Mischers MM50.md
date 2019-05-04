@@ -38,14 +38,23 @@
 
 - #### Typ 0x01ce: Einstellungen WW-Vorrang HK2
   [01ce]:#typ-0x01ce-einstellungen-ww-vorrang-hk2
-  Gesammelter Datensatz aus den einzelnen Offsets. So als Telegramm noch nicht gesehen!
+  **Gesammelter Datensatz** aus den einzelnen Offsets. So als Telegramm noch nicht gesehen!<br>
+  Telegramm wird mit Offset vom RC310 gesendet nachdem der Wert darin geändert wurde
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
   |**`21`**|**`00`**|**`ff`**|**`00`**|**`01 ce`**|          |     |                |
-  |        |        |        |     03 |           | **10**   |     |                |WW-Vorrang Heizkreis 2<br>ff= Ja<br>00= Nein
+  |        |        |        |     03 |           | **10**   |     |                |WW-Vorrang HK2<br>ff= Ja<br>00= Nein
   |        |        |        |        |           | **??**   |     |                |CRC
   |        |        |        |        |           | **??**   |     |                |BREAK (0x00)
+
+  <details>
+  <summary><b>gesendete Broadcast-Telegramme mit Offset, nach Ändern einer Einstellung</b></summary>
+
+  | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ |Bytes ges.|Bemerkung
+  |:------:|:------:|:------:|:------:|:---------:|:--------:|:--------
+  |  `21`  |  `00`  |  `ff`  |**`03`**|  `01 ce`  |  9       |Header + Offset 03 aus Datensatz + CRC + BREAK
+  </details>
 
 <br>
 
