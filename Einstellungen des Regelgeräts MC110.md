@@ -122,7 +122,7 @@ Telegrammmitschnitt am Beispiel der Einstellung `Notbetrieb Vorlauftemperatur`:
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
   |**`08`**|**`00`**|**`ff`**|**`00`**|**`01 cc`**|          |     |                |
-  |        |        |        |     03 |           | **10**   |     |                |WW-Vorrang Heizkreis 1<br>00= Ja<br>01= Nein
+  |        |        |        |     03 |           | **10**   |     |                |WW-Vorrang HK1<br>00= Ja<br>01= Nein
   |        |        |        |        |           | **11**   |     |                |CRC
   |        |        |        |        |           | **12**   |     |                |BREAK (0x00)
 
