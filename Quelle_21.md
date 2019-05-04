@@ -66,15 +66,17 @@
   |        |        |        |        |           | **16**   |     |                |CRC
   |        |        |        |        |           | **17**   |     |                |BREAK (0x00)
 
-  **zusätzliche Telegramme (variable Längen) mit gleichem Header** zwischendurch (bei Änderung):
+  <details>
+  <summary><b>zusätzliche Telegramme (variable Längen) mit gleichem Header</b> zwischendurch (bei Änderung)</summary>
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ |  Bytes (inkl. CRC & Break)  |        Offset/s aus Datensatz         |Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:---------------------------:|:-------------------------------------:|:--------
-  |**`21`**|**`00`**|**`ff`**|**`00`**|**`01 d8`**| 9<br>10                     | 00<br>00-01                           |sofort bei Änderung der Werte
-  |**`21`**|**`00`**|**`ff`**|**`01`**|**`01 d8`**| 9<br>10                     | 01<br>01-02                           |sofort bei Änderung der Werte
-  |**`21`**|**`00`**|**`ff`**|**`02`**|**`01 d8`**| 9                           | 02                                    |sofort bei Änderung der Werte
-  |**`21`**|**`00`**|**`ff`**|**`03`**|**`01 d8`**| 10                          | 03-04                                 |sofort bei Änderung der Werte
-  |**`21`**|**`00`**|**`ff`**|**`05`**|**`01 d8`**| 9                           | 05                                    |sofort bei Änderung der Werte
-  |**`21`**|**`00`**|**`ff`**|**`08`**|**`01 d8`**| 9                           | 08                                    |sofort bei Änderung der Werte
+  |  `21`  |  `00`  |  `ff`  |**`00`**|  `01 d8`  | 9<br>10                     | 00<br>00-01                           |sofort bei Änderung der Werte
+  |  `21`  |  `00`  |  `ff`  |**`01`**|  `01 d8`  | 9<br>10                     | 01<br>01-02                           |sofort bei Änderung der Werte
+  |  `21`  |  `00`  |  `ff`  |**`02`**|  `01 d8`  | 9                           | 02                                    |sofort bei Änderung der Werte
+  |  `21`  |  `00`  |  `ff`  |**`03`**|  `01 d8`  | 10                          | 03-04                                 |sofort bei Änderung der Werte
+  |  `21`  |  `00`  |  `ff`  |**`05`**|  `01 d8`  | 9                           | 05                                    |sofort bei Änderung der Werte
+  |  `21`  |  `00`  |  `ff`  |**`08`**|  `01 d8`  | 9                           | 08                                    |sofort bei Änderung der Werte
+  </summary>
 
 <br>
