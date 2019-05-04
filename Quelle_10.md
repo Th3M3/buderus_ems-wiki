@@ -34,7 +34,7 @@
 <br>
 
 - #### Typ 0xbf: RCErrorMessage
-  **Telegramwiederholung **alle 10min.** und sofort bei kommendem u. gehendem Ereignis
+  Telegramwiederholung **alle 10min.** und sofort bei kommendem u. gehendem Ereignis
 
   | Sender |  Ziel  |  Typ   | Offset | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:--------:|:---:|:--------------:|:--------
@@ -106,7 +106,7 @@
   |        |        |        |     1b |                      | **9**    |     |                | 
   |        |        |        |     1f |                      | **13**   |     |                |bisher immer 0xff
   |        |        |        |     20 |                      | **14**   |     |                |HK1 um 6:00 auf 0x64, um 22:59 auf 0x00, HK2 bisher immer 0x64
-  |        |        |        |     21 |                      | **15**   |     |                |HK1 bisher immer 0x4b, HK2 bisher immer 0x30
+  |        |        |        |     21 |                      | **15**   |     |     °C         |Heizkurve: max. Vorlauftemp<br>HK1 0x4b= 75°C<br>HK2 0x30= 48°C
   |        |        |        |     23 |                      | **17**   |     |                |bisher immer 0x3c
   |        |        |        |     24 |                      | **18**   |     |                |bisher immer 0x01
   |        |        |        |     25 |                      | **19**   |     |                |bisher immer 0xff
@@ -115,29 +115,31 @@
   |        |        |        |        |                      | **22**   |     |                |CRC
   |        |        |        |        |                      | **23**   |     |                |BREAK (0x00)
 
-  **zusätzliche Telegramme (variable Längen) mit gleichem Header** zwischendurch (bei Änderung):
+  <details>
+  <summary><b>zusätzliche Telegramme (variable Längen) mit gleichem Header</b> zwischendurch (bei Änderung)</summary>
 
   | Sender |  Ziel  |  Typ   | Offset |      EMS+ Typen      |  Bytes (inkl. CRC & Break)  |        Offset/s aus Datensatz         |Bemerkung
   |:------:|:------:|:------:|:------:|:--------------------:|:---------------------------:|:-------------------------------------:|:--------
-  |**`10`**|**`00`**|**`ff`**|**`02`**|**`01 a5`<br>`01 a6`**| 9                           | 02                                    |Telegramm bei Änderung
-  |**`10`**|**`00`**|**`ff`**|**`03`**|**`01 a5`<br>`01 a6`**| 9<br>12<br>13<br>22<br>27   | 03<br>03-06<br>03-07<br>03-10<br>03-15|Telegramm bei BA-Wechsel (durch Zeitprogramm)
-  |**`10`**|**`00`**|**`ff`**|**`04`**|**`01 a5`<br>`01 a6`**| 9                           | 04                                    |Telegramm bei Änderung
-  |**`10`**|**`00`**|**`ff`**|**`06`**|**`01 a5`<br>`01 a6`**| 10                          | 06-07                                 |Telegramm um 23°° (Zeitprogramm)
-  |**`10`**|**`00`**|**`ff`**|**`07`**|**`01 a5`<br>`01 a6`**| 9                           | 07                                    |Telegramm um 23°° (Zeitprogramm), bisher aber nur einmal in 3Tagen aufgezeichnet
-  |**`10`**|**`00`**|**`ff`**|**`08`**|**`01 a5`<br>`01 a6`**| 10<br>15<br>17              | 08-09<br>08-0e<br>08-10               |Telegramm alle 5 Min.
-  |**`10`**|**`00`**|**`ff`**|**`0a`**|**`01 a5`<br>`01 a6`**| 9                           | 0a                                    |Telegramm um 23°° (Zeitprogramm)
-  |**`10`**|**`00`**|**`ff`**|**`0b`**|**`01 a5`<br>`01 a6`**| 10<br>14                    | 0b-0c<br>0b-16                        |bei BA-Wechsel (Zeitprogramm)
-  |**`10`**|**`00`**|**`ff`**|**`0d`**|**`01 a5`<br>`01 a6`**| 10<br>12                    | 0d-0e<br>0d-10                        |alle 60sec.
-  |**`10`**|**`00`**|**`ff`**|**`0f`**|**`01 a5`<br>`01 a6`**| 10                          | 0f-10                                 |unregelmäßig, alle 1-12min
-  |**`10`**|**`00`**|**`ff`**|**`15`**|**`01 a5`<br>`01 a6`**| 9<br>13<br>27               | 15<br>15-19<br>15-27                  |bei BA-Wechsel (durch Zeitprogramm)
-  |**`10`**|**`00`**|**`ff`**|**`19`**|**`01 a5`<br>`01 a6`**| 9                           | 19                                    |sporadisch bei Schaltpunkt (Zeitprogramm)
-  |**`10`**|**`00`**|**`ff`**|**`1a`**|**`01 a5`<br>`01 a6`**| 9                           | 1a                                    |bei BA-Wechsel d. Zeitprogramm
-  |**`10`**|**`00`**|**`ff`**|**`20`**|**`01 a5`<br>`01 a6`**| 9                           | 20                                    |bei BA-Wechsel d. Zeitprogramm
+  |  `10`  |  `00`  |  `ff`  |**`02`**|  `01 a5`<br>`01 a6`  | 9                           | 02                                    |Telegramm bei Änderung
+  |  `10`  |  `00`  |  `ff`  |**`03`**|  `01 a5`<br>`01 a6`  | 9<br>12<br>13<br>22<br>27   | 03<br>03-06<br>03-07<br>03-10<br>03-15|Telegramm bei BA-Wechsel (durch Zeitprogramm)
+  |  `10`  |  `00`  |  `ff`  |**`04`**|  `01 a5`<br>`01 a6`  | 9                           | 04                                    |Telegramm bei Änderung
+  |  `10`  |  `00`  |  `ff`  |**`06`**|  `01 a5`<br>`01 a6`  | 10                          | 06-07                                 |Telegramm um 23°° (Zeitprogramm)
+  |  `10`  |  `00`  |  `ff`  |**`07`**|  `01 a5`<br>`01 a6`  | 9                           | 07                                    |Telegramm um 23°° (Zeitprogramm), bisher aber nur einmal in 3Tagen aufgezeichnet
+  |  `10`  |  `00`  |  `ff`  |**`08`**|  `01 a5`<br>`01 a6`  | 10<br>15<br>17              | 08-09<br>08-0e<br>08-10               |Telegramm alle 5 Min.
+  |  `10`  |  `00`  |  `ff`  |**`0a`**|  `01 a5`<br>`01 a6`  | 9                           | 0a                                    |Telegramm um 23°° (Zeitprogramm)
+  |  `10`  |  `00`  |  `ff`  |**`0b`**|  `01 a5`<br>`01 a6`  | 10<br>14                    | 0b-0c<br>0b-16                        |bei BA-Wechsel (Zeitprogramm)
+  |  `10`  |  `00`  |  `ff`  |**`0d`**|  `01 a5`<br>`01 a6`  | 10<br>12                    | 0d-0e<br>0d-10                        |alle 60sec.
+  |  `10`  |  `00`  |  `ff`  |**`0f`**|  `01 a5`<br>`01 a6`  | 10                          | 0f-10                                 |unregelmäßig, alle 1-12min
+  |  `10`  |  `00`  |  `ff`  |**`15`**|  `01 a5`<br>`01 a6`  | 9<br>13<br>27               | 15<br>15-19<br>15-27                  |bei BA-Wechsel (durch Zeitprogramm)
+  |  `10`  |  `00`  |  `ff`  |**`19`**|  `01 a5`<br>`01 a6`  | 9                           | 19                                    |sporadisch bei Schaltpunkt (Zeitprogramm)
+  |  `10`  |  `00`  |  `ff`  |**`1a`**|  `01 a5`<br>`01 a6`  | 9                           | 1a                                    |bei BA-Wechsel d. Zeitprogramm
+  |  `10`  |  `00`  |  `ff`  |**`20`**|  `01 a5`<br>`01 a6`  | 9                           | 20                                    |bei BA-Wechsel d. Zeitprogramm
+  </details>
 
 <br>
 
 - #### Typ 0x01b9/0x01ba: ?_
-  Gesammelter Datensatz aus den einzelnen Offsets. So als Telegramm noch nicht gesehen!
+  **Gesammelter Datensatz** aus den einzelnen Offsets. So als Telegramm noch nicht gesehen!
 
   | Sender |  Ziel  |  Typ   | Offset |      EMS+ Typen      | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:--------------------:|:--------:|:---:|:--------------:|:--------
@@ -147,12 +149,14 @@
   |        |        |        |        |                      | **?**    |     |                |CRC
   |        |        |        |        |                      | **?**    |     |                |BREAK (0x00)
 
-  **zusätzliche Telegramme mit gleichem Header** zwischendurch (bei Änderung):
+  <details>
+  <summary><b>zusätzliche Telegramme mit gleichem Header</b> zwischendurch (bei Änderung)</summary>
 
   | Sender |  Ziel  |  Typ   | Offset |      EMS+ Typen      |  Bytes (inkl. CRC & Break)  |        Offset/s aus Datensatz         |Bemerkung
   |:------:|:------:|:------:|:------:|:--------------------:|:---------------------------:|:-------------------------------------:|:--------
-  |**`10`**|**`00`**|**`ff`**|**`08`**|**`01 b9`<br>`01 ba`**| 9                           | 08                                    |bei Zeitschaltpunkt (5:59 & 22:59)
-  |**`10`**|**`00`**|**`ff`**|**`12`**|**`01 b9`<br>`01 ba`**| 9                           | 12                                    |bei Zeitschaltpunkt (5:59 & 22:59)
+  |  `10`  |  `00`  |  `ff`  |**`08`**|  `01 b9`<br>`01 ba`  | 9                           | 08                                    |bei Zeitschaltpunkt (5:59 & 22:59)
+  |  `10`  |  `00`  |  `ff`  |**`12`**|  `01 b9`<br>`01 ba`  | 9                           | 12                                    |bei Zeitschaltpunkt (5:59 & 22:59)
+  </details>
 
 <br>
 
@@ -221,19 +225,10 @@
   |        |        |        |        |           | **11**   |     |                |CRC
   |        |        |        |        |           | **12**   |     |                |BREAK (0x00)
 
-  **zusätzliche Telegramme mit gleichem Header** zwischendurch (bei Änderung):
+  <details>
+  <summary><b>zusätzliche Telegramme mit gleichem Header</b> zwischendurch (bei Änderung)</summary>
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ |  Bytes (inkl. CRC & Break)  |        Offset/s aus Datensatz         |Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:---------------------------:|:-------------------------------------:|:--------
-  |**`10`**|**`00`**|**`ff`**|**`02`**|**`02 1d`**| 9                           | 02                                    |bei Änderung (durch Zeitschaltuhr)
-
-
-
-
-
-EMS+-Telegramme:
-=================
-
-10 00 f7 00 ff 02	20byte				(?<=00 )10 00 f7 00 ff 02.{39}.00	bytes 8 - 18 auf 0xff, wenn Zirkulatios-BA auf 'Eigenes Zeitprogramm' gestellt wird
-
-10 00 ff 89 00 a1	??
+  |  `10`  |  `00`  |  `ff`  |**`02`**|  `02 1d`  | 9                           | 02                                    |bei Änderung (durch Zeitschaltuhr)
+  </details>
