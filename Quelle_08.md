@@ -157,8 +157,8 @@
   |        |        |        |        | **5**    |     |     °C         |Warmwasser Sollwert (bei Soll="aus": 0x0a = 10°C)
   |        |        |        |        | **6-7**  |     | 0.1 °C         |Warmwasser Istwert
   |        |        |        |        | **8-9**  |     | 0.1 °C         |Warmwasser Istwert
-  |        |        |        |        | **14**   |     |     °C         |bisher immer 0x46 = 70°C (max. Temperatur?)
-  |        |        |        |        | **15**   |     |     °C         |bisher immer 0x3c = 60°C
+  |        |        |        |        | **14**   |     |     °C         |Sollwert thermische Desinfektion
+  |        |        |        |        | **15**   |     |     °C         |Sollwert tägl. Aufheizung Temperatur
   |        |        |        |        | **17.**  |**0**|     ja/nein    |WW-Bereitung durch Automatikprogramm aktiv
   |        |        |        |        |          |**2**|     ja/nein    |WW-Bereitung durch Einmalladung aktiv
   |        |        |        |        |          |**3**|     ja/nein    |WW-Bereitung durch thermische Desinfektion aktiv
