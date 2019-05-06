@@ -73,47 +73,49 @@
 - #### Typ 0x01a5/0x01a6: ?_Heizkreise
   Datensatz wird in zwei Telegrammen **zyklisch alle 60sec.** gesendet
 
-  | Sender |  Ziel  |  Typ   | Offset |      EMS+ Typen      | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
-  |:------:|:------:|:------:|:------:|:--------------------:|:--------:|:---:|:--------------:|:--------
-  |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 a5`<br>`01 a6`**|          |     |                |**Heizkreis 1<br>Heizkreis 2**
-  |        |        |        |     00 |                      | **7**    |     |                |bisher immer 0x80
-  |        |        |        |     02 |                      | **9**    |     |                |wechselt zw. 0x00, 0x01, 0x03 (0x11 wenn Sommer/Winter-Umschaltung auf ständig Sommer gestellt wird)
-  |        |        |        |     03 |                      | **10**   |     | 0.5 °C         |Raum-Solltemperatur
-  |        |        |        |     04 |                      | **11**   |     |     °C         |Vorlauftemp. Sollwert
-  |        |        |        |     06 |                      | **13**   |     | 0.5 °C         |aktuelle Raumtemp. lt. Programm (gleicher Wert wie in Byte 10)
-  |        |        |        |     07 |                      | **14**   |     | 0.5 °C         |nachfolgende Raumsolltemp lt. Programm (0x00 = Heizen Aus)
-  |        |        |        |  08-09 |                      | **15-16**|     |     min        |Restzeit bis Betriebsart gewechselt wird (z.B. Heizen > Absenken), max. Anzeige 24h 
-  |        |        |        |     0a |                      | **17**   |     |                |Betriebsart (0x01 = Absenken, 0x03 = Heizen)
-  |        |        |        |     0b |                      | **18**   |     |                |aktuelle Betriebsart lt. Programm (gleicher Wert wie Byte 17)
-  |        |        |        |     0c |                      | **19**   |     |                |nachfolgende Betriebsart lt. Programm
-  |        |        |        |  0d-0e |                      | **20-21**|     |     min        |wie Bytes 15-16
-  |        |        |        |  0f-10 |                      | **22-23**|     |     min        |verstrichene Zeit in aktueller Betriebsart
-  |        |        |        |     13 |                      | **26**   |     |                |bisher immer 0x11
-  |        |        |        |     14 |                      | **27**   |     |                |bisher immer 0x01
-  |        |        |        |     15 |                      | **28**   |     |                |bei BA Heizen auf 0x03, abends auf 0x00
-  |        |        |        |     16 |                      | **29**   |     |                |bisher immer 0xff
-  |        |        |        |     17 |                      | **30**   |     |                |bisher immer 0xff
-  |        |        |        |        |                      | **32**   |     |                |CRC
-  |        |        |        |        |                      | **33**   |     |                |BREAK (0x00)
+  | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
+  |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
+  |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 a5`**|          |     |                |Header für **Heizkreis 1**
+  |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 a5`**|          |     |                |Header für **Heizkreis 2**
+  |        |        |        |     00 |           | **7**    |     |                |bisher immer 0x80
+  |        |        |        |     02 |           | **9**    |     |                |wechselt zw. 0x00, 0x01, 0x03 (0x11 wenn Sommer/Winter-Umschaltung auf ständig Sommer gestellt wird)
+  |        |        |        |     03 |           | **10**   |     | 0.5 °C         |Raum-Solltemperatur
+  |        |        |        |     04 |           | **11**   |     |     °C         |Vorlauftemp. Sollwert
+  |        |        |        |     06 |           | **13**   |     | 0.5 °C         |aktuelle Raumtemp. lt. Programm (gleicher Wert wie in Byte 10)
+  |        |        |        |     07 |           | **14**   |     | 0.5 °C         |nachfolgende Raumsolltemp lt. Programm (0x00 = Heizen Aus)
+  |        |        |        |  08-09 |           | **15-16**|     |     min        |Restzeit bis Betriebsart gewechselt wird (z.B. Heizen > Absenken), max. Anzeige 24h 
+  |        |        |        |     0a |           | **17**   |     |                |Betriebsart (0x01 = Absenken, 0x03 = Heizen)
+  |        |        |        |     0b |           | **18**   |     |                |aktuelle Betriebsart lt. Programm (gleicher Wert wie Byte 17)
+  |        |        |        |     0c |           | **19**   |     |                |nachfolgende Betriebsart lt. Programm
+  |        |        |        |  0d-0e |           | **20-21**|     |     min        |wie Bytes 15-16
+  |        |        |        |  0f-10 |           | **22-23**|     |     min        |verstrichene Zeit in aktueller Betriebsart
+  |        |        |        |     13 |           | **26**   |     |                |bisher immer 0x11
+  |        |        |        |     14 |           | **27**   |     |                |bisher immer 0x01
+  |        |        |        |     15 |           | **28**   |     |                |bei BA Heizen auf 0x03, abends auf 0x00
+  |        |        |        |     16 |           | **29**   |     |                |bisher immer 0xff
+  |        |        |        |     17 |           | **30**   |     |                |bisher immer 0xff
+  |        |        |        |        |           | **32**   |     |                |CRC
+  |        |        |        |        |           | **33**   |     |                |BREAK (0x00)
 
   **Erweiterung mit Offset 0x19**, direkt im Anschluss:<br>
 
-  | Sender |  Ziel  |  Typ   | Offset |      EMS+ Typen      | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
-  |:------:|:------:|:------:|:------:|:--------------------:|:--------:|:---:|:--------------:|:--------
-  |**`10`**|**`00`**|**`ff`**|**`19`**|**`01 a5`<br>`01 a6`**|          |     |                |**Heizkreis 1<br>Heizkreis 2**
-  |        |        |        |     19 |                      | **7**    |     |                |6:00-23:50 auf 0x06, ansonsten HK1 auf 0x05 & HK2 auf 0x04
-  |        |        |        |     1a |                      | **8**    |     |                |HK1 6:00 auf 0x04, 22:59 auf 0x06, HK2 bisher immer 0x04
-  |        |        |        |     1b |                      | **9**    |     |                | 
-  |        |        |        |     1f |                      | **13**   |     |                |bisher immer 0xff
-  |        |        |        |     20 |                      | **14**   |     |                |HK1 um 6:00 auf 0x64, um 22:59 auf 0x00, HK2 bisher immer 0x64
-  |        |        |        |     21 |                      | **15**   |     |     °C         |Heizkurve: max. Vorlauftemp<br>HK1 0x4b= 75°C<br>HK2 0x30= 48°C
-  |        |        |        |     23 |                      | **17**   |     |                |bisher immer 0x3c
-  |        |        |        |     24 |                      | **18**   |     |                |bisher immer 0x01
-  |        |        |        |     25 |                      | **19**   |     |                |bisher immer 0xff
-  |        |        |        |     26 |                      | **20**   |     |                |bisher immer 0x01
-  |        |        |        |     27 |                      | **21**   |     |                |bisher immer 0x02
-  |        |        |        |        |                      | **22**   |     |                |CRC
-  |        |        |        |        |                      | **23**   |     |                |BREAK (0x00)
+  | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
+  |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
+  |**`10`**|**`00`**|**`ff`**|**`19`**|**`01 a5`**|          |     |                |Header für **Heizkreis 1**
+  |**`10`**|**`00`**|**`ff`**|**`19`**|**`01 a6`**|          |     |                |Header für **Heizkreis 2**
+  |        |        |        |     19 |           | **7**    |     |                |6:00-23:50 auf 0x06, ansonsten HK1 auf 0x05 & HK2 auf 0x04
+  |        |        |        |     1a |           | **8**    |     |                |HK1 6:00 auf 0x04, 22:59 auf 0x06, HK2 bisher immer 0x04
+  |        |        |        |     1b |           | **9**    |     |                | 
+  |        |        |        |     1f |           | **13**   |     |                |bisher immer 0xff
+  |        |        |        |     20 |           | **14**   |     |                |HK1 um 6:00 auf 0x64, um 22:59 auf 0x00, HK2 bisher immer 0x64
+  |        |        |        |     21 |           | **15**   |     |     °C         |Heizkurve: max. Vorlauftemp<br>HK1 0x4b= 75°C<br>HK2 0x30= 48°C
+  |        |        |        |     23 |           | **17**   |     |                |bisher immer 0x3c
+  |        |        |        |     24 |           | **18**   |     |                |bisher immer 0x01
+  |        |        |        |     25 |           | **19**   |     |                |bisher immer 0xff
+  |        |        |        |     26 |           | **20**   |     |                |bisher immer 0x01
+  |        |        |        |     27 |           | **21**   |     |                |bisher immer 0x02
+  |        |        |        |        |           | **22**   |     |                |CRC
+  |        |        |        |        |           | **23**   |     |                |BREAK (0x00)
 
   <details>
   <summary><b>zusätzliche Telegramme (variable Längen) mit gleichem Header</b> zwischendurch (bei Änderung)</summary>
@@ -141,13 +143,14 @@
 - #### Typ 0x01b9/0x01ba: ?_
   **Gesammelter Datensatz** aus den einzelnen Offsets. So als Telegramm noch nicht gesehen!
 
-  | Sender |  Ziel  |  Typ   | Offset |      EMS+ Typen      | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
-  |:------:|:------:|:------:|:------:|:--------------------:|:--------:|:---:|:--------------:|:--------
-  |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 b9`<br>`01 ba`**|          |     |                |**?_Heizkreis 1<br>?_Heizkreis 2**
-  |        |        |        |     08 |                      | **?**    |     |                |bisher immer 0xff
-  |        |        |        |     12 |                      | **?**    |     |                |bisher immer 0x00
-  |        |        |        |        |                      | **?**    |     |                |CRC
-  |        |        |        |        |                      | **?**    |     |                |BREAK (0x00)
+  | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
+  |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
+  |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 b9`**|          |     |                |Header für **?_Heizkreis 1**
+  |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 ba`**|          |     |                |Header für **?_Heizkreis 2**
+  |        |        |        |     08 |           | **?**    |     |                |bisher immer 0xff
+  |        |        |        |     12 |           | **?**    |     |                |bisher immer 0x00
+  |        |        |        |        |           | **?**    |     |                |CRC
+  |        |        |        |        |           | **?**    |     |                |BREAK (0x00)
 
   <details>
   <summary><b>zusätzliche Telegramme mit gleichem Header</b> zwischendurch (bei Änderung)</summary>
@@ -160,30 +163,32 @@
 
 <br>
 
-- #### Typ 0x01e0: RC310 -> MC110: ?_
-  Telegramwiederholung **alle 60sec.**
+- #### Typ 0x01e0: RC310 -> MC110: UBASollwerte
+  Telegramwiederholung **alle 60sec.**<br>
+  Mit diesem Telegramm steuert die Bedieneinheit den Brenner
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
   |**`10`**|**`08`**|**`ff`**|**`00`**|**`01 e0`**|          |     |                |
   |        |        |        |        |           | **7**    |     |                |bisher immer 0x01
-  |        |        |        |        |           | **8**    |     |                |6:00 bis 22:59 Werte 0x30 - 0x2f, nachts 0x00
-  |        |        |        |        |           | **9**    |     |                |6:00 bis 22:59 0x64, nachts 0x00
+  |        |        |        |        |           | **8**    |     |     °C         |?_Vorlauf_Sollwert (6:00 bis 22:59 Werte 0x30 - 0x2f, nachts 0x00)
+  |        |        |        |        |           | **9**    |     |     %          |?_Leistungsanforderung (6:00 bis 22:59 0x64, nachts 0x00)
   |        |        |        |        |           | **11**   |     |                |bisher immer 0x01
   |        |        |        |        |           | **12**   |     |                |CRC
   |        |        |        |        |           | **13**   |     |                |BREAK (0x00)
 
 <br>
 
-- #### Typ 0x01e2: RC310 -> Mischer: ?_
-  Telegramwiederholung **alle 60sec. oder bei Änderung**
+- #### Typ 0x01e2: RC310 -> MMSollwerte
+  Telegramwiederholung **alle 60sec. oder bei Änderung**<br>
+  Mit diesem Telegramm steuert die Bedieneinheit den Mischer
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
   |**`10`**|**`21`**|**`ff`**|**`00`**|**`01 e2`**|          |     |                |
   |        |        |        |        |           |  **7**   |     |                |bisher immer 0x01
-  |        |        |        |        |           |  **8**   |     |                |?_Vorlauf_Sollwert (0x17 - 0x25)
-  |        |        |        |        |           |  **9**   |     |                |bisher immer 0x64
+  |        |        |        |        |           |  **8**   |     |     °C         |?_Vorlauf_Sollwert (0x17 - 0x25)
+  |        |        |        |        |           |  **9**   |     |     %          |?_Leistungsanforderung (bisher immer 0x64)
   |        |        |        |        |           | **11**   |     |                |bisher immer 0x01
   |        |        |        |        |           | **12**   |     |                |CRC
   |        |        |        |        |           | **13**   |     |                |BREAK (0x00)
