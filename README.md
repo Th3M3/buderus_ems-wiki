@@ -44,15 +44,15 @@ Hier sind meine Erkenntnisse aus dem EMS-Bus unserer Buderus-Heizung:
 
   Aufbau EMS-Telegramm:
   
-  |Byte 1|Byte 2|Byte 3|Byte 4|Byte 5 ... Byte n-2|Byte n-1|Byte n|
-  |:----:|:----:|:----:|:----:|:-----------------:|:------:|:----:|
-  |Sender|Ziel  |Typ   |Offset|Nutzdaten          |CRC     |BREAK |
+  |Byte 1|Byte 2|Byte 3|Byte 4|Byte 5 ... Byte n<sup>-2</sup>|Byte n<sup>-1</sup>|Byte n|
+  |:----:|:----:|:----:|:----:|:----------------------------:|:-----------------:|:----:|
+  |Sender|Ziel  |Typ   |Offset|Nutzdaten                     |CRC                |BREAK |
     
   Aufbau EMSplus-Telegramm:
   
-  |Byte 1|Byte 2|Byte 3|Byte 4|Byte 5 & Byte 6| Byte 7... Byte n-2|Byte n-1|Byte n|
-  |:----:|:----:|:----:|:----:|:-------------:|:-----------------:|:------:|:----:|
-  |Sender|Ziel  |`ff`  |Offset|EMSplus-Typ    |Nutzdaten          |CRC     |BREAK |
+  |Byte 1|Byte 2|Byte 3|Byte 4|Byte 5 & Byte 6| Byte 7... Byte n<sup>-2</sup>|Byte n<sup>-1</sup>|Byte n|
+  |:----:|:----:|:----:|:----:|:-------------:|:----------------------------:|:-----------------:|:----:|
+  |Sender|Ziel  |`ff`  |Offset|EMSplus-Typ    |Nutzdaten                     |CRC                |BREAK |
 
   Mit der **Zieladresse** kann ein Teilnehmer direkt angesprochen werden. Oft senden die Teilnehmer an Ziel `00`, was als Broadcast an alle Teilnehmer zu verstehen ist.<br>
   Setzt der Absender zusätzlich in der Zieladresse das höchste Bit, dann ist dies eine Abfrage nach einen Wert/Wertebereich aus einem Datenblock.<br>
@@ -61,7 +61,7 @@ Hier sind meine Erkenntnisse aus dem EMS-Bus unserer Buderus-Heizung:
   Bei Lesebefehlen ist der Offset hilfreich, um nur einen Teil eines Datensatzes abzugragen.<br>
   Bei Schreibbefehlen wird über den Offset festgelegt, an welche Stelle der oder die neuen Wert(e) geschrieben werden sollen.
 
-  **CRC** ist ein über Bytes 1 bis n-2 errechnetes Polynom zur Redundanzprüfung beim Empfänger.<br>
+  **CRC** ist ein über Bytes 1 bis n<sup>-2</sup> errechnetes Polynom zur Redundanzprüfung beim Empfänger.<br>
   
   **Break** ist eigentlich kein gesendetes Zeichen. Bei einem Break hält der Teilnehmer die Leitung länger als eine Frame-Zeit auf logisch 0 und signalisiert damit das Ende der Übertragung.<br>Auf Grund der fehlenden korrekten Break-Erkennung wird dies jedoch über die serielle Schnittstelle als `00` eingelesen.
   > Obwohl viele EMS-Telegramme im [EMS wiki] dekodiert wurden, tauchen hier weitestgehend neue, nicht dokumentierte Telegramme auf.
