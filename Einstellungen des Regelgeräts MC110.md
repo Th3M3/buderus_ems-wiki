@@ -6,7 +6,7 @@ Telegrammmitschnitt am Beispiel der Einstellung `Notbetrieb Vorlauftemperatur`:
   1. Einstellung an RC310 aufrufen:<br>
     -> RC fragt die Einstellung vom MC110 ab:<br>
     `10 88 f9 00 11 e6 00 00 13 c2 00`.<br>
-    Das Regelgerät antwortet umgehend und sendet die Einstellungsparameter:<br>
+    Das Regelgerät antwortet umgehend und sendet die Einstellungsdetails:<br>
     `08 10 f9 00 e6 00 00 13 0f 00 00 00 1e 00 00 00 2d 00 00 00 5a 00 00 00 3a 8d 00`<br>
     (Aktualwert= 58°C, min.= 30°C, max= 90°C).
 
@@ -20,23 +20,26 @@ Telegrammmitschnitt am Beispiel der Einstellung `Notbetrieb Vorlauftemperatur`:
     und<br>
     `08 00 e6 1b 09 09 00 22 00`.
 
+  4. Je nach <u>geänderer</u> Einstellung werden mit dem Telegrammtyp `0xf7` untergeordnete Einstellungen (un)sichtbar geschaltet.
+
 <br>
 
 - #### Typ 0xf7: Sichtbar/Unsichtbarschalten von Einstellungen der RC's
   [f7]:#typ-0xf7-sichtbarunsichtbarschalten-von-einstellungen-der-rcs
-  ggf. steuert das Regelgerät die Sichtbarkeit von Einstellungen in Abhängigkeit anderer Einstellungen
+  Damit steuert das Regelgerät die Sichtbarkeit von Einstellungen in Abhängigkeit <u>geänderter</u> übergeordneter Einstellungen<br>
+  Die Bytelänge der Bitmaske ist abgängig vom Einstellungsdatensatz, dessen Einstellungen maskiert werden sollen.<br>
    
-  | Sender |  Ziel  |  Typ   | Offset | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
-  |:------:|:------:|:------:|:------:|:--------:|:---:|:--------------:|:--------
-  |**`08`**|**`00`**|**`f7`**|**`00`**|          |     |                |
-  |        |        |        |        | **5-7**  |     |     Daten-Typ  |Einstellungsdatensatz, z.B.<br>`ff 07 d0`: [ext. Wärmeanforderung][07d0]
-  |        |        |        |        |  **8**   |     |                |Bitmaske sichtbare Einstellungen (nach Offset des Datensatzes)
-  |        |        |        |        |  **9**   |     |                |CRC
-  |        |        |        |        | **10**   |     |                |BREAK (0x00)
+  | Sender |  Ziel  |  Typ   | Offset |       Byte  Nr.       | Bit |Faktor & Einheit|Bemerkung
+  |:------:|:------:|:------:|:------:|:---------------------:|:---:|:--------------:|:--------
+  |**`08`**|**`00`**|**`f7`**|**`??`**|                       |     |                |Der Offset beschreibt, ab welchem Offsetbyte des Einstellungsdatensatzes die Bitmaske angewendet wird
+  |        |        |        |        |  **5-7**              |     |     Daten-Typ  |Einstellungsdatensatz, z.B.<br>`ff 07 d0`: [ext. Wärmeanforderung][07d0] (offset=00, n=10)<br>`ea 00 00`: [Warmwasser][ea] (offset=00, n=13)
+  |        |        |        |        |  **8-n<sup>-2</sup>** |     |                |Bitmaske sichtbare Einstellungen:<br>Das zuerst übertragene Byte maskiert nach Bitwertigkeit (von hinten nach vorne) die Offsets des Einstellungsdatensatzes. Weitere Bytes maskieren analog dazu die nachfolgenden höherwertigeren (max.) 8 Offsets.
+  |        |        |        |        |    n<sup>-1</sup>     |     |                |CRC
+  |        |        |        |        |    n                  |     |                |BREAK (0x00)
 
 <br>
 
-- #### Typ 0xf9: RC -?> MC110: Abfrage Einstellungsparameter
+- #### Typ 0xf9: RC -?> MC110: Abfrage Einstellungsdetails
   beim Aufrufen der Einstellung
 
   | Sender |  Ziel  |  Typ   | Offset | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
@@ -50,7 +53,7 @@ Telegrammmitschnitt am Beispiel der Einstellung `Notbetrieb Vorlauftemperatur`:
 
   <br>
 
-  #### MC110 -> RC310: Antwort Einstellungsparameter
+  #### MC110 -> RC310: Antwort Einstellungsdetails
   Antwort auf vorherige Abfrage
    
   | Sender |  Ziel  |  Typ   | Offset | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
@@ -59,7 +62,7 @@ Telegrammmitschnitt am Beispiel der Einstellung `Notbetrieb Vorlauftemperatur`:
   |        |        |        |        |  **5-8** |     |                |Wiederholung der Bytes 6-9 aus dem vorherigen Abfrage-Telegramm
   |        |        |        |        |  **9**   |     |                |Bitmaske?
   |        |        |        |        | **13**   |     |                |minimal einstellbarer Wert
-  |        |        |        |        | **17**   |     |                |Standardwert der Einstellung
+  |        |        |        |        | **17**   |     |                |Wert Werkseinstellung
   |        |        |        |        | **21**   |     |                |maximal einstellbarer Wert
   |        |        |        |        | **25**   |     |                |aktueller Wert der Einstellung
   |        |        |        |        | **26**   |     |                |CRC
@@ -106,10 +109,16 @@ Telegrammmitschnitt am Beispiel der Einstellung `Notbetrieb Vorlauftemperatur`:
   |**`08`**|**`00`**|**`ea`**|**`00`**|          |     |                |
   |        |        |        |     05 | **10**   |     |                |Warmwasser ein/aus<br>00= aus<br>01=ein
   |        |        |        |     06 | **11**   |     |     °C         |Sollwert Wassertemperatur
+  |        |        |        |     07 | **12**   |     |     °K         |Einschalttemp. Differenz (negativer Wert, z.B. -6°K)
+  |        |        |        |     09 | **14**   |     |     °K         |Vorlauftemp. Erhöhung (Kesseltemperhöhung bei WW-Bereitung)
+  |        |        |        |     0a | **15**   |     |                |Zirkulationspumpe vorhanden<br>00= nein <br>01= ja<br>Nach einer Änderung werden mit Telegrammtyp f7 div. Einstellungen (un)sichtbar geschaltet
   |        |        |        |     0b | **16**   |     |                |Einschalthäufigkeit Zirkulationspumpe<br>01= 1x3Min/h ... 06= 6x3Min/h<br>07= Dauerhaft Ein
   |        |        |        |     0c | **17**   |     |     °C         |Sollwert thermische Desinfektion
   |        |        |        |     10 | **21**   |     |     °C         |Sollwert Einmalladung Temperatur
+  |        |        |        |     11 | **22**   |     |     °C         |Sollwert tägl. Aufheizung Temperatur
   |        |        |        |     12 | **23**   |     |     °C         |Sollwert Warmwasser reduziert
+  |        |        |        |     14 | **25**   |     |     °C         |max. (einstellbare) WW-Temperatur
+  |        |        |        |     19 | **30**   |     |                |Speicherladeoptimierung<br>00= aus<br>01= ein
   |        |        |        |        | **31**   |     |                |CRC
   |        |        |        |        | **32**   |     |                |BREAK (0x00)
   
