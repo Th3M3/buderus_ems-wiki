@@ -1,11 +1,11 @@
 ## Einstellungen des Mischers MM50
 
-> Wie beim MC110 werden beim Aufrufen einer Einstellung die Einstellungsparameter vom Mischer abgefragt.<br>
+> Wie beim MC110 werden beim Aufrufen einer Einstellung die Einstellungsdetails vom Mischer abgefragt.<br>
 > Wie beim RC310 sendet der Mischer lediglich die geänderte Einstellung als Broadcast (und nicht den kompletten Einstellungsdatensatz).
 
 <br>
 
-- #### Typ 0xf9: RC -?> MM50: Abfrage Einstellungsparameter
+- #### Typ 0xf9: RC -?> MM50: Abfrage Einstellungsdetails
   beim Aufrufen der Einstellung
 
   | Sender |  Ziel  |  Typ   | Offset | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
@@ -19,7 +19,7 @@
 
   <br>
   
-  #### MM50 -> RC310: Antwort Einstellungsparameter
+  #### MM50 -> RC310: Antwort Einstellungsdetails
   Antwort auf vorherige Abfrage
    
   | Sender |  Ziel  |  Typ   | Offset | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
