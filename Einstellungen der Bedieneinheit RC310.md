@@ -39,7 +39,7 @@
   |        |        |        |     04 |           | **?**    |     |     °C         |Heizkurve: Auslegungstemperatur HK1 (bei EMS-Typ `01 af` an Offset 04)
   |        |        |        |     05 |           | **?**    |     |     °C         |Heizkurve: Auslegungstemperatur HK2 (bei EMS-Typ `01 b0` an Offset 05)
   |        |        |        |     06 |           | **?**    |     |     °C         |Sommer/Winnter-Umschaltung / Sommer ab
-  |        |        |        |     07 |           | **?**    |     |     °C         |Sommer/Winnter-Umschaltung / Betriebsart<br>00= Ständig Sommer (aus)<br>01= Sommerbetrieb ab eingest. Temperatur<br>02= ständig Winter (aus)
+  |        |        |        |     07 |           | **?**    |     |     °C         |Sommer/Winnter-Umschaltung / Betriebsart<br>00= Ständig Sommer (aus)<br>01= Sommerbetrieb ab eingest. Temperatur<br>02= ständig Winter (ein)
   |        |        |        |        |           | **?**    |     |                |CRC
   |        |        |        |        |           | **?**    |     |                |BREAK (0x00)
 
