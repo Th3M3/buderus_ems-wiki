@@ -40,20 +40,22 @@
   |:------:|:------:|:------:|:------:|:--------:|:---:|:--------------:|:--------
   |**`10`**|**`00`**|**`bf`**|**`00`**|          |     |                |
   |        |        |        |        | **5**    |     |                |bisher immer 0x10 (eigene Adresse?)
-  |        |        |        |        | **6**    |     |                |bisher immer 0x9e
+  |        |        |        |        | **6**    |     |                |Model ID, 0x9e= RC310
   |        |        |        |        | **29**   |     |                |CRC
   |        |        |        |        | **30**   |     |                |BREAK (0x00)
 
 <br>
 
-- #### Typ 0xe7: RC310 -> MC110
-  Telegramwiederholung **alle 60sec.**
+- #### Typ 0xe7: RC310 -> MC110: WW_Sollwert
+  Telegramwiederholung **alle 60sec.**<br>
+  Mit diesem Telegramm (de)aktiviert die Bedieneinheit die WW-Bereitung des MC110
   
   | Sender |  Ziel  |  Typ   | Offset | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:--------:|:---:|:--------------:|:--------
   |**`10`**|**`08`**|**`e7`**|**`00`**|          |     |                |
-  |        |        |        |        | **5**    |     |                |bisher immer 0x01
-  |        |        |        |        | **6.**   |**1**|     ja/nein    |ab 5uhr 1, ab 22:59 wieder 0
+  |        |        |        |        |  **5**   |     |                |?_Zirkulationspumpe vorhanden? (bisher immer 0x01)
+  |        |        |        |        |  **6.**  |**1**|     ja/nein    |?_WW-Bereitung aktiv (ab 5uhr 1, ab 22:59 wieder 0)
+  |        |        |        |        |  **6**   |     |     Betriebsart|NOCH ZU PRÜFEN: 00= ständig aus<br>01= ständig ein<br>02= Automatik
   |        |        |        |        | **8**    |     |                |CRC
   |        |        |        |        | **9**    |     |                |BREAK (0x00)
 
@@ -76,15 +78,16 @@
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
   |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 a5`**|          |     |                |Header für **Heizkreis 1**
-  |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 a5`**|          |     |                |Header für **Heizkreis 2**
-  |        |        |        |     00 |           | **7**    |     |                |bisher immer 0x80
+  |**`10`**|**`00`**|**`ff`**|**`00`**|**`01 a6`**|          |     |                |Header für **Heizkreis 2**
+  |        |        |        |  00-01 |           | **7-8**  |     | 0.1 °C         |Istwert Raumfühler<br>(0x8000 falls Fühler fehlt)
   |        |        |        |     02 |           | **9**    |     |                |wechselt zw. 0x00, 0x01, 0x03 (0x11 wenn Sommer/Winter-Umschaltung auf ständig Sommer gestellt wird)
   |        |        |        |     03 |           | **10**   |     | 0.5 °C         |Raum-Solltemperatur
   |        |        |        |     04 |           | **11**   |     |     °C         |Vorlauftemp. Sollwert
   |        |        |        |     06 |           | **13**   |     | 0.5 °C         |aktuelle Raumtemp. lt. Programm (gleicher Wert wie in Byte 10)
   |        |        |        |     07 |           | **14**   |     | 0.5 °C         |nachfolgende Raumsolltemp lt. Programm (0x00 = Heizen Aus)
   |        |        |        |  08-09 |           | **15-16**|     |     min        |Restzeit bis Betriebsart gewechselt wird (z.B. Heizen > Absenken), max. Anzeige 24h 
-  |        |        |        |     0a |           | **17**   |     |                |Betriebsart (0x01 = Absenken, 0x03 = Heizen)
+  |        |        |        |     0a |           | **17.**  |**0**|                |Betriebsart: 0= manuell, 1= auto
+  |        |        |        |     0a |           | **17.**  |**1**|                |Betriebsart: 0= heizen, 1= absenken
   |        |        |        |     0b |           | **18**   |     |                |aktuelle Betriebsart lt. Programm (gleicher Wert wie Byte 17)
   |        |        |        |     0c |           | **19**   |     |                |nachfolgende Betriebsart lt. Programm
   |        |        |        |  0d-0e |           | **20-21**|     |     min        |wie Bytes 15-16
@@ -163,9 +166,9 @@
 
 <br>
 
-- #### Typ 0x01e0: RC310 -> MC110: UBASollwerte
+- #### Typ 0x01e0: RC310 -> MC110: HK1_Sollwert
   Telegramwiederholung **alle 60sec.**<br>
-  Mit diesem Telegramm steuert die Bedieneinheit den Brenner
+  Mit diesem Telegramm steuert die Bedieneinheit den Vorlauf-Sollwert des UBA für Heizkreis 1
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
@@ -179,9 +182,9 @@
 
 <br>
 
-- #### Typ 0x01e2: RC310 -> MMSollwerte
+- #### Typ 0x01e2: RC310 -> HK2_Sollwert
   Telegramwiederholung **alle 60sec. oder bei Änderung**<br>
-  Mit diesem Telegramm steuert die Bedieneinheit den Mischer
+  Mit diesem Telegramm steuert die Bedieneinheit den Vorlauf-Sollwert des Mischers für Heizkreis 2
 
   | Sender |  Ziel  |  Typ   | Offset | EMS+  Typ | Byte Nr. | Bit |Faktor & Einheit|Bemerkung
   |:------:|:------:|:------:|:------:|:---------:|:--------:|:---:|:--------------:|:--------
