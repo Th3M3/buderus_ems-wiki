@@ -33,7 +33,7 @@
   |:------:|:------:|:------:|:------:|:--------:|:---:|:--------------:|:--------
   |**`08`**|**`00`**|**`bf`**|**`00`**|          |     |                |
   |        |        |        |        | **5**    |     |                |bisher immer 0x08 (eigene Adresse?)
-  |        |        |        |        | **6**    |     |                |bisher immer 0x85
+  |        |        |        |        | **6**    |     |                |Model ID, 0x85= ?MC110/GB125?
   |        |        |        |        | **8**    |     |     Dezimal    |bei blockierendem Fehler: bisher immer 0x0a (Störungsklasse, siehe Servicehandbuch) 
   |        |        |        |        | **9**    |     |                |bei blockierendem Fehler: bisher immer 0x11 (evtl. 0x10 = verriegelnder Fehler, 0x11 = blockierender Fehler, 0x12 = Anlagenfehler, 0x13 = zurückgesetzter Anlagenfehler)
   |        |        |        |        | **10**   |     |     ASCII      |Störungscode 0. Zeichen (ggf. 0x0a = Leerzeichen)
